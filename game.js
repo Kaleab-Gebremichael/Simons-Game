@@ -2,19 +2,21 @@
 var buttonColours = ["red", "blue", "green", "yellow"];
 
 var gamePattern = [];
-
-//empty array with the name userClickedPattern.
 var userClickedPattern = [];
 
-//Use jQuery to detect when any of the buttons are clicked and trigger a handler function.
+var userClickedPattern = [];
+
+//detect when any of the buttons are clicked
 $(".btn").click(function() {
 
   var userChosenColour = $(this).attr("id");
 
-  //uupdate the userClickedPattern
+  //update the userClickedPattern
   userClickedPattern.push(userChosenColour);
 
-  //console.log(userClickedPattern);
+  playSound(userChosenColour);
+
+  animatePress(userChosenColour);
 
 });
 
@@ -26,6 +28,21 @@ function nextSequence() {
 
   $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
 
-  var audio = new Audio("sounds/" + randomChosenColour + ".mp3");
+  playSound(randomChosenColour);
+}
+
+function playSound(name) {
+  var audio = new Audio("sounds/" + name + ".mp3");
   audio.play();
+}
+
+function animatePress(currentColor) {
+
+  //add pressed class to pressed button
+  $("#" + currentColor).addClass("pressed");
+
+  //remove pressed class after a 100 milliseconds.
+  setTimeout(function () {
+    $("#" + currentColor).removeClass("pressed");
+  }, 100);
 }
